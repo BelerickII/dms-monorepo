@@ -1,21 +1,192 @@
 // use prisma-8
 
-model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  username  String?
-  name      String?
-  posts     Post[]
-  createdAt TimestamptzString @default(now())
-  updatedAt temporal.updatedAtString()
+enum userRole {
+  @@type("pg/text@1")
+  STUDENT = "student"
+  STAFF = "staff"
+  ADMIN = "admin"  
 }
 
-model Post {
-  id        Int      @id @default(autoincrement())
-  title     String
-  content   String?
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  Int
-  createdAt TimestamptzString @default(now())
-  updatedAt temporal.updatedAtString()
+enum dept {
+  @@type("pg/text@1")
+  COMPUTER_SCIENCE = "computer science"
+  SOFTWARE_ENGINEERING = "software engineering"
+  DATA_SCIENCE = "data science"
+  CYBERSECURITY = "cybersecurity"
+}
+
+enum modeOfEntry {
+  @@type("pg/text@1")
+  UTME = "utme"
+  TRANSFER = "transfer"
+  DIRECT_ENTRY = "direct entry"  
+}
+
+enum uploadStatus {
+  @@type("pg/text@1")
+  PENDING = "pending"
+  APPROVED = "approved"
+  REJECTED = "rejected"
+}
+
+enum registrationStatus {
+  @@type("pg/text@1")
+  NOT_STARTED = "not started"
+  ONGOING = "ongoing"
+  COMPLETED = "completed"
+  FAILED = "failed"
+}
+
+enum stuCategory {
+  @@type("pg/text@1")
+  FRESHER = "fresher"
+  RETURNING = "returning"
+  FINALIST = "finalist"
+}
+
+
+model User {
+  id  Int @id @default(autoincrement())
+  email String  @unique
+  firstName String
+  lastName  String
+  password  String
+  createdAt Date  @default(now())
+  isActive  Boolean
+  mustResetPassword Boolean
+  passwordRestAt  Date?
+  role  userRole  @default(ADMIN)
+}
+
+
+model Student {
+  id  Int @id @default(autoincrement())
+  matric_no String @unique
+  department  dept
+  level Int
+  mode_of_entry modeOfEntry @default(UTME)
+  graduated Boolean
+  categoryId  Int?
+  academicSession String?
+  userId  Int @unique
+  departmentId  Int
+
+  //relations
+  documents Document[]
+  notifications Notification[]
+  registrations Registration[]
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  dept  Department  @relation(fields: [departmentId], references: [id])
+}
+
+
+model Staff {
+  id  Int @id @default(autoincrement())
+  staffId String
+  userId  Int @unique
+
+  //relations
+  documents Document[]
+  notifications Notification[]
+  user User @relation(fields: [userId], references: [id])
+}
+
+
+model Department {
+  id  Int @id @default(autoincrement())
+  department  dept
+  max_level Int
+
+  //relations
+  students  Student[] 
+}
+
+model Document {
+  id  Int @id  @default(autoincrement())
+  documentType  String
+  fileName  String
+  filePath  String
+  status  uploadStatus @default(PENDING)
+  uploadDate  Date  @default(now())
+  reviewDate  Date?
+  comment String?
+  lockedBy  Int?
+  lockedAt  Date?
+  studentId Int
+  staffId Int
+  sessionId Int
+
+  //relations
+  student Student @relation(fields: [studentId], references: [id])
+  staff Staff @relation(fields: [staffId], references: [id])
+  session Session @relation(fields: [sessionId], references: [id])
+}
+
+
+model Session {
+  id  Int @id @default(autoincrement())
+  sessionId String  @unique
+  isActive  Boolean
+  startDate Date
+  endDate   Date?
+
+  //relations
+  registrations Registration[]
+  documents Document[]
+}
+
+
+model Registration {
+  id  Int @id @default(autoincrement())
+  status  registrationStatus @default(NOT_STARTED)
+  dateRegistered  Date?
+  studentId Int @unique
+  sessionId Int @unique
+
+  //relations
+  student Student @relation(fields: [studentId], references: [id])
+  session Session @relation(fields: [sessionId], references: [id])
+}
+
+
+model studentCategories{
+  id  Int @id @default(autoincrement())
+  category  stuCategory
+
+  //relations
+  reqDocs requiredDocuments[]
+}
+
+
+model requiredDocuments {
+  id  Int @id @default(autoincrement())
+  name  String
+  isActive  Boolean
+
+  //relations
+  stuCategory studentCategories[]
+}
+
+model requiredDocumentsMAPstudentCategories {
+  stuCategoryId Int
+  reqDocsId Int
+  category  studentCategories @relation(fields: [stuCategoryId], references: [id])
+  docs  requiredDocuments @relation(fields: [reqDocsId], references: [id])
+
+  @@id([stuCategoryId, reqDocsId])
+}
+
+
+model Notification {
+  id  Int @id @default(autoincrement())
+  title String
+  message String
+  createdAt Date  @default(now())
+  isRead  Boolean
+  studentId Int
+  staffId Int
+
+  //relations
+  student Student @relation(fields: [studentId], references: [id])
+  staff Staff @relation(fields: [staffId], references: [id])
 }
