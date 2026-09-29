@@ -268,7 +268,7 @@
               "lockedAt": {
                 "nullable": true,
                 "type": {
-                  "codecId": "pg/date-temporal@1",
+                  "codecId": "pg/timestamptz-temporal@1",
                   "kind": "scalar"
                 }
               },
@@ -282,7 +282,7 @@
               "reviewDate": {
                 "nullable": true,
                 "type": {
-                  "codecId": "pg/date-temporal@1",
+                  "codecId": "pg/timestamptz-temporal@1",
                   "kind": "scalar"
                 }
               },
@@ -323,7 +323,7 @@
               "uploadDate": {
                 "nullable": false,
                 "type": {
-                  "codecId": "pg/date-temporal@1",
+                  "codecId": "pg/timestamptz-temporal@1",
                   "kind": "scalar"
                 }
               }
@@ -429,7 +429,7 @@
               "createdAt": {
                 "nullable": false,
                 "type": {
-                  "codecId": "pg/date-temporal@1",
+                  "codecId": "pg/timestamptz-temporal@1",
                   "kind": "scalar"
                 }
               },
@@ -543,7 +543,7 @@
               "dateRegistered": {
                 "nullable": true,
                 "type": {
-                  "codecId": "pg/date-temporal@1",
+                  "codecId": "pg/timestamptz-temporal@1",
                   "kind": "scalar"
                 }
               },
@@ -643,7 +643,7 @@
               "endDate": {
                 "nullable": true,
                 "type": {
-                  "codecId": "pg/date-temporal@1",
+                  "codecId": "pg/timestamptz-temporal@1",
                   "kind": "scalar"
                 }
               },
@@ -671,7 +671,7 @@
               "startDate": {
                 "nullable": false,
                 "type": {
-                  "codecId": "pg/date-temporal@1",
+                  "codecId": "pg/timestamptz-temporal@1",
                   "kind": "scalar"
                 }
               }
@@ -1024,7 +1024,7 @@
               "createdAt": {
                 "nullable": false,
                 "type": {
-                  "codecId": "pg/date-temporal@1",
+                  "codecId": "pg/timestamptz-temporal@1",
                   "kind": "scalar"
                 }
               },
@@ -1080,7 +1080,7 @@
               "passwordRestAt": {
                 "nullable": true,
                 "type": {
-                  "codecId": "pg/date-temporal@1",
+                  "codecId": "pg/timestamptz-temporal@1",
                   "kind": "scalar"
                 }
               },
@@ -1098,7 +1098,40 @@
                 }
               }
             },
-            "relations": {},
+            "relations": {
+              "staff": {
+                "cardinality": "1:1",
+                "nullable": true,
+                "on": {
+                  "localFields": [
+                    "id"
+                  ],
+                  "targetFields": [
+                    "userId"
+                  ]
+                },
+                "to": {
+                  "model": "Staff",
+                  "namespace": "public"
+                }
+              },
+              "student": {
+                "cardinality": "1:1",
+                "nullable": true,
+                "on": {
+                  "localFields": [
+                    "id"
+                  ],
+                  "targetFields": [
+                    "userId"
+                  ]
+                },
+                "to": {
+                  "model": "Student",
+                  "namespace": "public"
+                }
+              }
+            },
             "storage": {
               "fields": {
                 "createdAt": {
@@ -1428,8 +1461,8 @@
                   "nullable": false
                 },
                 "lockedAt": {
-                  "codecId": "pg/date-temporal@1",
-                  "nativeType": "date",
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "nativeType": "timestamptz",
                   "nullable": true
                 },
                 "lockedBy": {
@@ -1438,8 +1471,8 @@
                   "nullable": true
                 },
                 "reviewDate": {
-                  "codecId": "pg/date-temporal@1",
-                  "nativeType": "date",
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "nativeType": "timestamptz",
                   "nullable": true
                 },
                 "sessionId": {
@@ -1473,12 +1506,12 @@
                   "nullable": false
                 },
                 "uploadDate": {
-                  "codecId": "pg/date-temporal@1",
+                  "codecId": "pg/timestamptz-temporal@1",
                   "default": {
                     "expression": "now()",
                     "kind": "function"
                   },
-                  "nativeType": "date",
+                  "nativeType": "timestamptz",
                   "nullable": false
                 }
               },
@@ -1568,12 +1601,12 @@
             "notification": {
               "columns": {
                 "createdAt": {
-                  "codecId": "pg/date-temporal@1",
+                  "codecId": "pg/timestamptz-temporal@1",
                   "default": {
                     "expression": "now()",
                     "kind": "function"
                   },
-                  "nativeType": "date",
+                  "nativeType": "timestamptz",
                   "nullable": false
                 },
                 "id": {
@@ -1680,8 +1713,8 @@
               ],
               "columns": {
                 "dateRegistered": {
-                  "codecId": "pg/date-temporal@1",
-                  "nativeType": "date",
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "nativeType": "timestamptz",
                   "nullable": true
                 },
                 "id": {
@@ -1879,8 +1912,8 @@
             "session": {
               "columns": {
                 "endDate": {
-                  "codecId": "pg/date-temporal@1",
-                  "nativeType": "date",
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "nativeType": "timestamptz",
                   "nullable": true
                 },
                 "id": {
@@ -1903,8 +1936,8 @@
                   "nullable": false
                 },
                 "startDate": {
-                  "codecId": "pg/date-temporal@1",
-                  "nativeType": "date",
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "nativeType": "timestamptz",
                   "nullable": false
                 }
               },
@@ -2174,12 +2207,12 @@
               ],
               "columns": {
                 "createdAt": {
-                  "codecId": "pg/date-temporal@1",
+                  "codecId": "pg/timestamptz-temporal@1",
                   "default": {
                     "expression": "now()",
                     "kind": "function"
                   },
-                  "nativeType": "date",
+                  "nativeType": "timestamptz",
                   "nullable": false
                 },
                 "email": {
@@ -2222,8 +2255,8 @@
                   "nullable": false
                 },
                 "passwordRestAt": {
-                  "codecId": "pg/date-temporal@1",
-                  "nativeType": "date",
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "nativeType": "timestamptz",
                   "nullable": true
                 },
                 "role": {
@@ -2315,7 +2348,7 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "abd6ea91d9db085081451075f74b7ccc4f39b6a7fa201cf7611a90a2cb9cdf74"
+    "storageHash": "4a9a1dc260e1975e10bf6467a8ab4d4f3790096446170d136a59f14d4a8a6eb4"
   },
   "capabilities": {
     "postgres": {

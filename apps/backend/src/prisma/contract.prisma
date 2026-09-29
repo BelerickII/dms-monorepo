@@ -51,11 +51,15 @@ model User {
   firstName String
   lastName  String
   password  String
-  createdAt Date  @default(now())
+  createdAt DateTime  @default(now())
   isActive  Boolean
   mustResetPassword Boolean
-  passwordRestAt  Date?
+  passwordRestAt  DateTime?
   role  userRole  @default(ADMIN)
+
+  //Back-relations to child 
+  student Student?
+  staff   Staff?
 }
 
 
@@ -107,11 +111,11 @@ model Document {
   fileName  String
   filePath  String
   status  uploadStatus @default(PENDING)
-  uploadDate  Date  @default(now())
-  reviewDate  Date?
+  uploadDate  DateTime  @default(now())
+  reviewDate  DateTime?
   comment String?
   lockedBy  Int?
-  lockedAt  Date?
+  lockedAt  DateTime?
   studentId Int
   staffId Int
   sessionId Int
@@ -127,8 +131,8 @@ model Session {
   id  Int @id @default(autoincrement())
   sessionId String  @unique
   isActive  Boolean
-  startDate Date
-  endDate   Date?
+  startDate DateTime
+  endDate   DateTime?
 
   //relations
   registrations Registration[]
@@ -139,7 +143,7 @@ model Session {
 model Registration {
   id  Int @id @default(autoincrement())
   status  registrationStatus @default(NOT_STARTED)
-  dateRegistered  Date?
+  dateRegistered  DateTime?
   studentId Int @unique
   sessionId Int @unique
 
@@ -181,7 +185,7 @@ model Notification {
   id  Int @id @default(autoincrement())
   title String
   message String
-  createdAt Date  @default(now())
+  createdAt DateTime  @default(now())
   isRead  Boolean
   studentId Int
   staffId Int
