@@ -34,7 +34,7 @@ import type {
 } from '@prisma/orm-postgres/contract/types';
 
 export type StorageHash =
-  StorageHashBase<'abd6ea91d9db085081451075f74b7ccc4f39b6a7fa201cf7611a90a2cb9cdf74'>;
+  StorageHashBase<'4a9a1dc260e1975e10bf6467a8ab4d4f3790096446170d136a59f14d4a8a6eb4'>;
 export type ExecutionHash = ExecutionHashBase<string>;
 export type ProfileHash =
   ProfileHashBase<'3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2'>;
@@ -253,11 +253,11 @@ export type FieldOutputTypes = {
       readonly fileName: CodecTypes['pg/text@1']['output'];
       readonly filePath: CodecTypes['pg/text@1']['output'];
       readonly status: 'pending' | 'approved' | 'rejected';
-      readonly uploadDate: CodecTypes['pg/date-temporal@1']['output'];
-      readonly reviewDate: CodecTypes['pg/date-temporal@1']['output'] | null;
+      readonly uploadDate: CodecTypes['pg/timestamptz-temporal@1']['output'];
+      readonly reviewDate: CodecTypes['pg/timestamptz-temporal@1']['output'] | null;
       readonly comment: CodecTypes['pg/text@1']['output'] | null;
       readonly lockedBy: CodecTypes['pg/int4@1']['output'] | null;
-      readonly lockedAt: CodecTypes['pg/date-temporal@1']['output'] | null;
+      readonly lockedAt: CodecTypes['pg/timestamptz-temporal@1']['output'] | null;
       readonly studentId: CodecTypes['pg/int4@1']['output'];
       readonly staffId: CodecTypes['pg/int4@1']['output'];
       readonly sessionId: CodecTypes['pg/int4@1']['output'];
@@ -266,7 +266,7 @@ export type FieldOutputTypes = {
       readonly id: CodecTypes['pg/int4@1']['output'];
       readonly title: CodecTypes['pg/text@1']['output'];
       readonly message: CodecTypes['pg/text@1']['output'];
-      readonly createdAt: CodecTypes['pg/date-temporal@1']['output'];
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
       readonly isRead: CodecTypes['pg/bool@1']['output'];
       readonly studentId: CodecTypes['pg/int4@1']['output'];
       readonly staffId: CodecTypes['pg/int4@1']['output'];
@@ -274,7 +274,7 @@ export type FieldOutputTypes = {
     readonly Registration: {
       readonly id: CodecTypes['pg/int4@1']['output'];
       readonly status: 'not started' | 'ongoing' | 'completed' | 'failed';
-      readonly dateRegistered: CodecTypes['pg/date-temporal@1']['output'] | null;
+      readonly dateRegistered: CodecTypes['pg/timestamptz-temporal@1']['output'] | null;
       readonly studentId: CodecTypes['pg/int4@1']['output'];
       readonly sessionId: CodecTypes['pg/int4@1']['output'];
     };
@@ -291,8 +291,8 @@ export type FieldOutputTypes = {
       readonly id: CodecTypes['pg/int4@1']['output'];
       readonly sessionId: CodecTypes['pg/text@1']['output'];
       readonly isActive: CodecTypes['pg/bool@1']['output'];
-      readonly startDate: CodecTypes['pg/date-temporal@1']['output'];
-      readonly endDate: CodecTypes['pg/date-temporal@1']['output'] | null;
+      readonly startDate: CodecTypes['pg/timestamptz-temporal@1']['output'];
+      readonly endDate: CodecTypes['pg/timestamptz-temporal@1']['output'] | null;
     };
     readonly Staff: {
       readonly id: CodecTypes['pg/int4@1']['output'];
@@ -322,10 +322,10 @@ export type FieldOutputTypes = {
       readonly firstName: CodecTypes['pg/text@1']['output'];
       readonly lastName: CodecTypes['pg/text@1']['output'];
       readonly password: CodecTypes['pg/text@1']['output'];
-      readonly createdAt: CodecTypes['pg/date-temporal@1']['output'];
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
       readonly isActive: CodecTypes['pg/bool@1']['output'];
       readonly mustResetPassword: CodecTypes['pg/bool@1']['output'];
-      readonly passwordRestAt: CodecTypes['pg/date-temporal@1']['output'] | null;
+      readonly passwordRestAt: CodecTypes['pg/timestamptz-temporal@1']['output'] | null;
       readonly role: 'student' | 'staff' | 'admin';
     };
   };
@@ -344,11 +344,11 @@ export type FieldInputTypes = {
       readonly fileName: CodecTypes['pg/text@1']['input'];
       readonly filePath: CodecTypes['pg/text@1']['input'];
       readonly status: 'pending' | 'approved' | 'rejected';
-      readonly uploadDate: CodecTypes['pg/date-temporal@1']['input'];
-      readonly reviewDate: CodecTypes['pg/date-temporal@1']['input'] | null;
+      readonly uploadDate: CodecTypes['pg/timestamptz-temporal@1']['input'];
+      readonly reviewDate: CodecTypes['pg/timestamptz-temporal@1']['input'] | null;
       readonly comment: CodecTypes['pg/text@1']['input'] | null;
       readonly lockedBy: CodecTypes['pg/int4@1']['input'] | null;
-      readonly lockedAt: CodecTypes['pg/date-temporal@1']['input'] | null;
+      readonly lockedAt: CodecTypes['pg/timestamptz-temporal@1']['input'] | null;
       readonly studentId: CodecTypes['pg/int4@1']['input'];
       readonly staffId: CodecTypes['pg/int4@1']['input'];
       readonly sessionId: CodecTypes['pg/int4@1']['input'];
@@ -357,7 +357,7 @@ export type FieldInputTypes = {
       readonly id: CodecTypes['pg/int4@1']['input'];
       readonly title: CodecTypes['pg/text@1']['input'];
       readonly message: CodecTypes['pg/text@1']['input'];
-      readonly createdAt: CodecTypes['pg/date-temporal@1']['input'];
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
       readonly isRead: CodecTypes['pg/bool@1']['input'];
       readonly studentId: CodecTypes['pg/int4@1']['input'];
       readonly staffId: CodecTypes['pg/int4@1']['input'];
@@ -365,7 +365,7 @@ export type FieldInputTypes = {
     readonly Registration: {
       readonly id: CodecTypes['pg/int4@1']['input'];
       readonly status: 'not started' | 'ongoing' | 'completed' | 'failed';
-      readonly dateRegistered: CodecTypes['pg/date-temporal@1']['input'] | null;
+      readonly dateRegistered: CodecTypes['pg/timestamptz-temporal@1']['input'] | null;
       readonly studentId: CodecTypes['pg/int4@1']['input'];
       readonly sessionId: CodecTypes['pg/int4@1']['input'];
     };
@@ -382,8 +382,8 @@ export type FieldInputTypes = {
       readonly id: CodecTypes['pg/int4@1']['input'];
       readonly sessionId: CodecTypes['pg/text@1']['input'];
       readonly isActive: CodecTypes['pg/bool@1']['input'];
-      readonly startDate: CodecTypes['pg/date-temporal@1']['input'];
-      readonly endDate: CodecTypes['pg/date-temporal@1']['input'] | null;
+      readonly startDate: CodecTypes['pg/timestamptz-temporal@1']['input'];
+      readonly endDate: CodecTypes['pg/timestamptz-temporal@1']['input'] | null;
     };
     readonly Staff: {
       readonly id: CodecTypes['pg/int4@1']['input'];
@@ -413,10 +413,10 @@ export type FieldInputTypes = {
       readonly firstName: CodecTypes['pg/text@1']['input'];
       readonly lastName: CodecTypes['pg/text@1']['input'];
       readonly password: CodecTypes['pg/text@1']['input'];
-      readonly createdAt: CodecTypes['pg/date-temporal@1']['input'];
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
       readonly isActive: CodecTypes['pg/bool@1']['input'];
       readonly mustResetPassword: CodecTypes['pg/bool@1']['input'];
-      readonly passwordRestAt: CodecTypes['pg/date-temporal@1']['input'] | null;
+      readonly passwordRestAt: CodecTypes['pg/timestamptz-temporal@1']['input'] | null;
       readonly role: 'student' | 'staff' | 'admin';
     };
   };
@@ -435,17 +435,17 @@ export type StorageColumnTypes = {
       readonly fileName: CodecTypes['pg/text@1']['output'];
       readonly filePath: CodecTypes['pg/text@1']['output'];
       readonly id: CodecTypes['pg/int4@1']['output'];
-      readonly lockedAt: CodecTypes['pg/date-temporal@1']['output'] | null;
+      readonly lockedAt: CodecTypes['pg/timestamptz-temporal@1']['output'] | null;
       readonly lockedBy: CodecTypes['pg/int4@1']['output'] | null;
-      readonly reviewDate: CodecTypes['pg/date-temporal@1']['output'] | null;
+      readonly reviewDate: CodecTypes['pg/timestamptz-temporal@1']['output'] | null;
       readonly sessionId: CodecTypes['pg/int4@1']['output'];
       readonly staffId: CodecTypes['pg/int4@1']['output'];
       readonly status: 'pending' | 'approved' | 'rejected';
       readonly studentId: CodecTypes['pg/int4@1']['output'];
-      readonly uploadDate: CodecTypes['pg/date-temporal@1']['output'];
+      readonly uploadDate: CodecTypes['pg/timestamptz-temporal@1']['output'];
     };
     readonly notification: {
-      readonly createdAt: CodecTypes['pg/date-temporal@1']['output'];
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
       readonly id: CodecTypes['pg/int4@1']['output'];
       readonly isRead: CodecTypes['pg/bool@1']['output'];
       readonly message: CodecTypes['pg/text@1']['output'];
@@ -454,7 +454,7 @@ export type StorageColumnTypes = {
       readonly title: CodecTypes['pg/text@1']['output'];
     };
     readonly registration: {
-      readonly dateRegistered: CodecTypes['pg/date-temporal@1']['output'] | null;
+      readonly dateRegistered: CodecTypes['pg/timestamptz-temporal@1']['output'] | null;
       readonly id: CodecTypes['pg/int4@1']['output'];
       readonly sessionId: CodecTypes['pg/int4@1']['output'];
       readonly status: 'not started' | 'ongoing' | 'completed' | 'failed';
@@ -470,11 +470,11 @@ export type StorageColumnTypes = {
       readonly stuCategoryId: CodecTypes['pg/int4@1']['output'];
     };
     readonly session: {
-      readonly endDate: CodecTypes['pg/date-temporal@1']['output'] | null;
+      readonly endDate: CodecTypes['pg/timestamptz-temporal@1']['output'] | null;
       readonly id: CodecTypes['pg/int4@1']['output'];
       readonly isActive: CodecTypes['pg/bool@1']['output'];
       readonly sessionId: CodecTypes['pg/text@1']['output'];
-      readonly startDate: CodecTypes['pg/date-temporal@1']['output'];
+      readonly startDate: CodecTypes['pg/timestamptz-temporal@1']['output'];
     };
     readonly staff: {
       readonly id: CodecTypes['pg/int4@1']['output'];
@@ -499,7 +499,7 @@ export type StorageColumnTypes = {
       readonly id: CodecTypes['pg/int4@1']['output'];
     };
     readonly user: {
-      readonly createdAt: CodecTypes['pg/date-temporal@1']['output'];
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
       readonly email: CodecTypes['pg/text@1']['output'];
       readonly firstName: CodecTypes['pg/text@1']['output'];
       readonly id: CodecTypes['pg/int4@1']['output'];
@@ -507,7 +507,7 @@ export type StorageColumnTypes = {
       readonly lastName: CodecTypes['pg/text@1']['output'];
       readonly mustResetPassword: CodecTypes['pg/bool@1']['output'];
       readonly password: CodecTypes['pg/text@1']['output'];
-      readonly passwordRestAt: CodecTypes['pg/date-temporal@1']['output'] | null;
+      readonly passwordRestAt: CodecTypes['pg/timestamptz-temporal@1']['output'] | null;
       readonly role: 'student' | 'staff' | 'admin';
     };
   };
@@ -526,17 +526,17 @@ export type StorageColumnInputTypes = {
       readonly fileName: CodecTypes['pg/text@1']['input'];
       readonly filePath: CodecTypes['pg/text@1']['input'];
       readonly id: CodecTypes['pg/int4@1']['input'];
-      readonly lockedAt: CodecTypes['pg/date-temporal@1']['input'] | null;
+      readonly lockedAt: CodecTypes['pg/timestamptz-temporal@1']['input'] | null;
       readonly lockedBy: CodecTypes['pg/int4@1']['input'] | null;
-      readonly reviewDate: CodecTypes['pg/date-temporal@1']['input'] | null;
+      readonly reviewDate: CodecTypes['pg/timestamptz-temporal@1']['input'] | null;
       readonly sessionId: CodecTypes['pg/int4@1']['input'];
       readonly staffId: CodecTypes['pg/int4@1']['input'];
       readonly status: 'pending' | 'approved' | 'rejected';
       readonly studentId: CodecTypes['pg/int4@1']['input'];
-      readonly uploadDate: CodecTypes['pg/date-temporal@1']['input'];
+      readonly uploadDate: CodecTypes['pg/timestamptz-temporal@1']['input'];
     };
     readonly notification: {
-      readonly createdAt: CodecTypes['pg/date-temporal@1']['input'];
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
       readonly id: CodecTypes['pg/int4@1']['input'];
       readonly isRead: CodecTypes['pg/bool@1']['input'];
       readonly message: CodecTypes['pg/text@1']['input'];
@@ -545,7 +545,7 @@ export type StorageColumnInputTypes = {
       readonly title: CodecTypes['pg/text@1']['input'];
     };
     readonly registration: {
-      readonly dateRegistered: CodecTypes['pg/date-temporal@1']['input'] | null;
+      readonly dateRegistered: CodecTypes['pg/timestamptz-temporal@1']['input'] | null;
       readonly id: CodecTypes['pg/int4@1']['input'];
       readonly sessionId: CodecTypes['pg/int4@1']['input'];
       readonly status: 'not started' | 'ongoing' | 'completed' | 'failed';
@@ -561,11 +561,11 @@ export type StorageColumnInputTypes = {
       readonly stuCategoryId: CodecTypes['pg/int4@1']['input'];
     };
     readonly session: {
-      readonly endDate: CodecTypes['pg/date-temporal@1']['input'] | null;
+      readonly endDate: CodecTypes['pg/timestamptz-temporal@1']['input'] | null;
       readonly id: CodecTypes['pg/int4@1']['input'];
       readonly isActive: CodecTypes['pg/bool@1']['input'];
       readonly sessionId: CodecTypes['pg/text@1']['input'];
-      readonly startDate: CodecTypes['pg/date-temporal@1']['input'];
+      readonly startDate: CodecTypes['pg/timestamptz-temporal@1']['input'];
     };
     readonly staff: {
       readonly id: CodecTypes['pg/int4@1']['input'];
@@ -590,7 +590,7 @@ export type StorageColumnInputTypes = {
       readonly id: CodecTypes['pg/int4@1']['input'];
     };
     readonly user: {
-      readonly createdAt: CodecTypes['pg/date-temporal@1']['input'];
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
       readonly email: CodecTypes['pg/text@1']['input'];
       readonly firstName: CodecTypes['pg/text@1']['input'];
       readonly id: CodecTypes['pg/int4@1']['input'];
@@ -598,7 +598,7 @@ export type StorageColumnInputTypes = {
       readonly lastName: CodecTypes['pg/text@1']['input'];
       readonly mustResetPassword: CodecTypes['pg/bool@1']['input'];
       readonly password: CodecTypes['pg/text@1']['input'];
-      readonly passwordRestAt: CodecTypes['pg/date-temporal@1']['input'] | null;
+      readonly passwordRestAt: CodecTypes['pg/timestamptz-temporal@1']['input'] | null;
       readonly role: 'student' | 'staff' | 'admin';
     };
   };
@@ -611,12 +611,14 @@ export namespace Models {
     firstName: CodecTypes['pg/text@1']['output'];
     lastName: CodecTypes['pg/text@1']['output'];
     password: CodecTypes['pg/text@1']['output'];
-    createdAt: CodecTypes['pg/date-temporal@1']['output'];
+    createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
     isActive: CodecTypes['pg/bool@1']['output'];
     mustResetPassword: CodecTypes['pg/bool@1']['output'];
-    passwordRestAt: CodecTypes['pg/date-temporal@1']['output'] | null;
+    passwordRestAt: CodecTypes['pg/timestamptz-temporal@1']['output'] | null;
     role: 'student' | 'staff' | 'admin';
-    readonly [RelationKeys]?: never;
+    staff: public_Staff | null;
+    student: public_Student | null;
+    readonly [RelationKeys]?: 'staff' | 'student';
   };
   export type public_Student = {
     id: CodecTypes['pg/int4@1']['output'];
@@ -658,11 +660,11 @@ export namespace Models {
     fileName: CodecTypes['pg/text@1']['output'];
     filePath: CodecTypes['pg/text@1']['output'];
     status: 'pending' | 'approved' | 'rejected';
-    uploadDate: CodecTypes['pg/date-temporal@1']['output'];
-    reviewDate: CodecTypes['pg/date-temporal@1']['output'] | null;
+    uploadDate: CodecTypes['pg/timestamptz-temporal@1']['output'];
+    reviewDate: CodecTypes['pg/timestamptz-temporal@1']['output'] | null;
     comment: CodecTypes['pg/text@1']['output'] | null;
     lockedBy: CodecTypes['pg/int4@1']['output'] | null;
-    lockedAt: CodecTypes['pg/date-temporal@1']['output'] | null;
+    lockedAt: CodecTypes['pg/timestamptz-temporal@1']['output'] | null;
     studentId: CodecTypes['pg/int4@1']['output'];
     staffId: CodecTypes['pg/int4@1']['output'];
     sessionId: CodecTypes['pg/int4@1']['output'];
@@ -675,8 +677,8 @@ export namespace Models {
     id: CodecTypes['pg/int4@1']['output'];
     sessionId: CodecTypes['pg/text@1']['output'];
     isActive: CodecTypes['pg/bool@1']['output'];
-    startDate: CodecTypes['pg/date-temporal@1']['output'];
-    endDate: CodecTypes['pg/date-temporal@1']['output'] | null;
+    startDate: CodecTypes['pg/timestamptz-temporal@1']['output'];
+    endDate: CodecTypes['pg/timestamptz-temporal@1']['output'] | null;
     documents: public_Document[];
     registrations: public_Registration[];
     readonly [RelationKeys]?: 'documents' | 'registrations';
@@ -684,7 +686,7 @@ export namespace Models {
   export type public_Registration = {
     id: CodecTypes['pg/int4@1']['output'];
     status: 'not started' | 'ongoing' | 'completed' | 'failed';
-    dateRegistered: CodecTypes['pg/date-temporal@1']['output'] | null;
+    dateRegistered: CodecTypes['pg/timestamptz-temporal@1']['output'] | null;
     studentId: CodecTypes['pg/int4@1']['output'];
     sessionId: CodecTypes['pg/int4@1']['output'];
     session: public_Session;
@@ -715,7 +717,7 @@ export namespace Models {
     id: CodecTypes['pg/int4@1']['output'];
     title: CodecTypes['pg/text@1']['output'];
     message: CodecTypes['pg/text@1']['output'];
-    createdAt: CodecTypes['pg/date-temporal@1']['output'];
+    createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
     isRead: CodecTypes['pg/bool@1']['output'];
     studentId: CodecTypes['pg/int4@1']['output'];
     staffId: CodecTypes['pg/int4@1']['output'];
@@ -822,14 +824,14 @@ type ContractBase = Omit<
                   };
                 };
                 readonly uploadDate: {
-                  readonly nativeType: 'date';
-                  readonly codecId: 'pg/date-temporal@1';
+                  readonly nativeType: 'timestamptz';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
                   readonly nullable: false;
                   readonly default: { readonly kind: 'function'; readonly expression: 'now()' };
                 };
                 readonly reviewDate: {
-                  readonly nativeType: 'date';
-                  readonly codecId: 'pg/date-temporal@1';
+                  readonly nativeType: 'timestamptz';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
                   readonly nullable: true;
                 };
                 readonly comment: {
@@ -843,8 +845,8 @@ type ContractBase = Omit<
                   readonly nullable: true;
                 };
                 readonly lockedAt: {
-                  readonly nativeType: 'date';
-                  readonly codecId: 'pg/date-temporal@1';
+                  readonly nativeType: 'timestamptz';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
                   readonly nullable: true;
                 };
                 readonly studentId: {
@@ -946,8 +948,8 @@ type ContractBase = Omit<
                   readonly nullable: false;
                 };
                 readonly createdAt: {
-                  readonly nativeType: 'date';
-                  readonly codecId: 'pg/date-temporal@1';
+                  readonly nativeType: 'timestamptz';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
                   readonly nullable: false;
                   readonly default: { readonly kind: 'function'; readonly expression: 'now()' };
                 };
@@ -1031,8 +1033,8 @@ type ContractBase = Omit<
                   };
                 };
                 readonly dateRegistered: {
-                  readonly nativeType: 'date';
-                  readonly codecId: 'pg/date-temporal@1';
+                  readonly nativeType: 'timestamptz';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
                   readonly nullable: true;
                 };
                 readonly studentId: {
@@ -1184,13 +1186,13 @@ type ContractBase = Omit<
                   readonly nullable: false;
                 };
                 readonly startDate: {
-                  readonly nativeType: 'date';
-                  readonly codecId: 'pg/date-temporal@1';
+                  readonly nativeType: 'timestamptz';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
                   readonly nullable: false;
                 };
                 readonly endDate: {
-                  readonly nativeType: 'date';
-                  readonly codecId: 'pg/date-temporal@1';
+                  readonly nativeType: 'timestamptz';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
                   readonly nullable: true;
                 };
               };
@@ -1394,8 +1396,8 @@ type ContractBase = Omit<
                   readonly nullable: false;
                 };
                 readonly createdAt: {
-                  readonly nativeType: 'date';
-                  readonly codecId: 'pg/date-temporal@1';
+                  readonly nativeType: 'timestamptz';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
                   readonly nullable: false;
                   readonly default: { readonly kind: 'function'; readonly expression: 'now()' };
                 };
@@ -1410,8 +1412,8 @@ type ContractBase = Omit<
                   readonly nullable: false;
                 };
                 readonly passwordRestAt: {
-                  readonly nativeType: 'date';
-                  readonly codecId: 'pg/date-temporal@1';
+                  readonly nativeType: 'timestamptz';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
                   readonly nullable: true;
                 };
                 readonly role: {
@@ -1567,11 +1569,17 @@ type ContractBase = Omit<
               };
               readonly uploadDate: {
                 readonly nullable: false;
-                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/date-temporal@1' };
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
+                };
               };
               readonly reviewDate: {
                 readonly nullable: true;
-                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/date-temporal@1' };
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
+                };
               };
               readonly comment: {
                 readonly nullable: true;
@@ -1583,7 +1591,10 @@ type ContractBase = Omit<
               };
               readonly lockedAt: {
                 readonly nullable: true;
-                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/date-temporal@1' };
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
+                };
               };
               readonly studentId: {
                 readonly nullable: false;
@@ -1672,7 +1683,10 @@ type ContractBase = Omit<
               };
               readonly createdAt: {
                 readonly nullable: false;
-                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/date-temporal@1' };
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
+                };
               };
               readonly isRead: {
                 readonly nullable: false;
@@ -1739,7 +1753,10 @@ type ContractBase = Omit<
               };
               readonly dateRegistered: {
                 readonly nullable: true;
-                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/date-temporal@1' };
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
+                };
               };
               readonly studentId: {
                 readonly nullable: false;
@@ -1895,11 +1912,17 @@ type ContractBase = Omit<
               };
               readonly startDate: {
                 readonly nullable: false;
-                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/date-temporal@1' };
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
+                };
               };
               readonly endDate: {
                 readonly nullable: true;
-                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/date-temporal@1' };
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
+                };
               };
             };
             readonly relations: {
@@ -2176,7 +2199,10 @@ type ContractBase = Omit<
               };
               readonly createdAt: {
                 readonly nullable: false;
-                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/date-temporal@1' };
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
+                };
               };
               readonly isActive: {
                 readonly nullable: false;
@@ -2188,14 +2214,42 @@ type ContractBase = Omit<
               };
               readonly passwordRestAt: {
                 readonly nullable: true;
-                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/date-temporal@1' };
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
+                };
               };
               readonly role: {
                 readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
             };
-            readonly relations: Record<string, never>;
+            readonly relations: {
+              readonly staff: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Staff';
+                };
+                readonly cardinality: '1:1';
+                readonly nullable: true;
+                readonly on: {
+                  readonly localFields: readonly ['id'];
+                  readonly targetFields: readonly ['userId'];
+                };
+              };
+              readonly student: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Student';
+                };
+                readonly cardinality: '1:1';
+                readonly nullable: true;
+                readonly on: {
+                  readonly localFields: readonly ['id'];
+                  readonly targetFields: readonly ['userId'];
+                };
+              };
+            };
             readonly storage: {
               readonly table: 'user';
               readonly namespaceId: 'public';

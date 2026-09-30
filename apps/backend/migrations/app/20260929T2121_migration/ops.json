@@ -80,7 +80,7 @@
     "execute": [
       {
         "description": "create table \"document\"",
-        "sql": "CREATE TABLE \"public\".\"document\" (\n  \"comment\" text,\n  \"documentType\" text NOT NULL,\n  \"fileName\" text NOT NULL,\n  \"filePath\" text NOT NULL,\n  \"id\" SERIAL NOT NULL,\n  \"lockedAt\" date,\n  \"lockedBy\" int4,\n  \"reviewDate\" date,\n  \"sessionId\" int4 NOT NULL,\n  \"staffId\" int4 NOT NULL,\n  \"status\" text DEFAULT 'pending' NOT NULL,\n  \"studentId\" int4 NOT NULL,\n  \"uploadDate\" date DEFAULT (now()) NOT NULL,\n  PRIMARY KEY (\"id\"),\n  CONSTRAINT \"document_status_check_19a2b525\" CHECK (\"status\" IN ('pending', 'approved', 'rejected'))\n)",
+        "sql": "CREATE TABLE \"public\".\"document\" (\n  \"comment\" text,\n  \"documentType\" text NOT NULL,\n  \"fileName\" text NOT NULL,\n  \"filePath\" text NOT NULL,\n  \"id\" SERIAL NOT NULL,\n  \"lockedAt\" timestamptz,\n  \"lockedBy\" int4,\n  \"reviewDate\" timestamptz,\n  \"sessionId\" int4 NOT NULL,\n  \"staffId\" int4 NOT NULL,\n  \"status\" text DEFAULT 'pending' NOT NULL,\n  \"studentId\" int4 NOT NULL,\n  \"uploadDate\" timestamptz DEFAULT (now()) NOT NULL,\n  PRIMARY KEY (\"id\"),\n  CONSTRAINT \"document_status_check_19a2b525\" CHECK (\"status\" IN ('pending', 'approved', 'rejected'))\n)",
         "params": []
       }
     ],
@@ -119,7 +119,7 @@
     "execute": [
       {
         "description": "create table \"notification\"",
-        "sql": "CREATE TABLE \"public\".\"notification\" (\n  \"createdAt\" date DEFAULT (now()) NOT NULL,\n  \"id\" SERIAL NOT NULL,\n  \"isRead\" bool NOT NULL,\n  \"message\" text NOT NULL,\n  \"staffId\" int4 NOT NULL,\n  \"studentId\" int4 NOT NULL,\n  \"title\" text NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "sql": "CREATE TABLE \"public\".\"notification\" (\n  \"createdAt\" timestamptz DEFAULT (now()) NOT NULL,\n  \"id\" SERIAL NOT NULL,\n  \"isRead\" bool NOT NULL,\n  \"message\" text NOT NULL,\n  \"staffId\" int4 NOT NULL,\n  \"studentId\" int4 NOT NULL,\n  \"title\" text NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
         "params": []
       }
     ],
@@ -158,7 +158,7 @@
     "execute": [
       {
         "description": "create table \"registration\"",
-        "sql": "CREATE TABLE \"public\".\"registration\" (\n  \"dateRegistered\" date,\n  \"id\" SERIAL NOT NULL,\n  \"sessionId\" int4 NOT NULL,\n  \"status\" text DEFAULT 'not started' NOT NULL,\n  \"studentId\" int4 NOT NULL,\n  PRIMARY KEY (\"id\"),\n  CONSTRAINT \"registration_status_check_37f3e80e\" CHECK (\"status\" IN ('not started', 'ongoing', 'completed', 'failed'))\n)",
+        "sql": "CREATE TABLE \"public\".\"registration\" (\n  \"dateRegistered\" timestamptz,\n  \"id\" SERIAL NOT NULL,\n  \"sessionId\" int4 NOT NULL,\n  \"status\" text DEFAULT 'not started' NOT NULL,\n  \"studentId\" int4 NOT NULL,\n  PRIMARY KEY (\"id\"),\n  CONSTRAINT \"registration_status_check_37f3e80e\" CHECK (\"status\" IN ('not started', 'ongoing', 'completed', 'failed'))\n)",
         "params": []
       }
     ],
@@ -275,7 +275,7 @@
     "execute": [
       {
         "description": "create table \"session\"",
-        "sql": "CREATE TABLE \"public\".\"session\" (\n  \"endDate\" date,\n  \"id\" SERIAL NOT NULL,\n  \"isActive\" bool NOT NULL,\n  \"sessionId\" text NOT NULL,\n  \"startDate\" date NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "sql": "CREATE TABLE \"public\".\"session\" (\n  \"endDate\" timestamptz,\n  \"id\" SERIAL NOT NULL,\n  \"isActive\" bool NOT NULL,\n  \"sessionId\" text NOT NULL,\n  \"startDate\" timestamptz NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
         "params": []
       }
     ],
@@ -431,7 +431,7 @@
     "execute": [
       {
         "description": "create table \"user\"",
-        "sql": "CREATE TABLE \"public\".\"user\" (\n  \"createdAt\" date DEFAULT (now()) NOT NULL,\n  \"email\" text NOT NULL,\n  \"firstName\" text NOT NULL,\n  \"id\" SERIAL NOT NULL,\n  \"isActive\" bool NOT NULL,\n  \"lastName\" text NOT NULL,\n  \"mustResetPassword\" bool NOT NULL,\n  \"password\" text NOT NULL,\n  \"passwordRestAt\" date,\n  \"role\" text DEFAULT 'admin' NOT NULL,\n  PRIMARY KEY (\"id\"),\n  CONSTRAINT \"user_role_check_c56bdbf2\" CHECK (\"role\" IN ('student', 'staff', 'admin'))\n)",
+        "sql": "CREATE TABLE \"public\".\"user\" (\n  \"createdAt\" timestamptz DEFAULT (now()) NOT NULL,\n  \"email\" text NOT NULL,\n  \"firstName\" text NOT NULL,\n  \"id\" SERIAL NOT NULL,\n  \"isActive\" bool NOT NULL,\n  \"lastName\" text NOT NULL,\n  \"mustResetPassword\" bool NOT NULL,\n  \"password\" text NOT NULL,\n  \"passwordRestAt\" timestamptz,\n  \"role\" text DEFAULT 'admin' NOT NULL,\n  PRIMARY KEY (\"id\"),\n  CONSTRAINT \"user_role_check_c56bdbf2\" CHECK (\"role\" IN ('student', 'staff', 'admin'))\n)",
         "params": []
       }
     ],

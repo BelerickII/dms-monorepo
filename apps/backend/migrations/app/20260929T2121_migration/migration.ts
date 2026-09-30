@@ -1,6 +1,6 @@
 #!/usr/bin/env -S node
-import type { Contract as End } from '../../snapshots/abd6ea91d9db085081451075f74b7ccc4f39b6a7fa201cf7611a90a2cb9cdf74/contract';
-import endContract from '../../snapshots/abd6ea91d9db085081451075f74b7ccc4f39b6a7fa201cf7611a90a2cb9cdf74/contract.json' with { type: 'json' };
+import type { Contract as End } from '../../snapshots/4a9a1dc260e1975e10bf6467a8ab4d4f3790096446170d136a59f14d4a8a6eb4/contract';
+import endContract from '../../snapshots/4a9a1dc260e1975e10bf6467a8ab4d4f3790096446170d136a59f14d4a8a6eb4/contract.json' with { type: 'json' };
 import {
   Migration,
   MigrationCLI,
@@ -42,9 +42,9 @@ export default class M extends Migration<never, End> {
           col('fileName', 'text', { notNull: true, codecRef: { codecId: 'pg/text@1' } }),
           col('filePath', 'text', { notNull: true, codecRef: { codecId: 'pg/text@1' } }),
           col('id', 'SERIAL', { notNull: true, codecRef: { codecId: 'pg/int4@1' } }),
-          col('lockedAt', 'date', { codecRef: { codecId: 'pg/date-temporal@1' } }),
+          col('lockedAt', 'timestamptz', { codecRef: { codecId: 'pg/timestamptz-temporal@1' } }),
           col('lockedBy', 'int4', { codecRef: { codecId: 'pg/int4@1' } }),
-          col('reviewDate', 'date', { codecRef: { codecId: 'pg/date-temporal@1' } }),
+          col('reviewDate', 'timestamptz', { codecRef: { codecId: 'pg/timestamptz-temporal@1' } }),
           col('sessionId', 'int4', { notNull: true, codecRef: { codecId: 'pg/int4@1' } }),
           col('staffId', 'int4', { notNull: true, codecRef: { codecId: 'pg/int4@1' } }),
           col('status', 'text', {
@@ -53,10 +53,10 @@ export default class M extends Migration<never, End> {
             codecRef: { codecId: 'pg/text@1' },
           }),
           col('studentId', 'int4', { notNull: true, codecRef: { codecId: 'pg/int4@1' } }),
-          col('uploadDate', 'date', {
+          col('uploadDate', 'timestamptz', {
             notNull: true,
             default: fn('now()'),
-            codecRef: { codecId: 'pg/date-temporal@1' },
+            codecRef: { codecId: 'pg/timestamptz-temporal@1' },
           }),
         ],
         constraints: [
@@ -71,10 +71,10 @@ export default class M extends Migration<never, End> {
         schema: 'public',
         table: 'notification',
         columns: [
-          col('createdAt', 'date', {
+          col('createdAt', 'timestamptz', {
             notNull: true,
             default: fn('now()'),
-            codecRef: { codecId: 'pg/date-temporal@1' },
+            codecRef: { codecId: 'pg/timestamptz-temporal@1' },
           }),
           col('id', 'SERIAL', { notNull: true, codecRef: { codecId: 'pg/int4@1' } }),
           col('isRead', 'bool', { notNull: true, codecRef: { codecId: 'pg/bool@1' } }),
@@ -89,7 +89,9 @@ export default class M extends Migration<never, End> {
         schema: 'public',
         table: 'registration',
         columns: [
-          col('dateRegistered', 'date', { codecRef: { codecId: 'pg/date-temporal@1' } }),
+          col('dateRegistered', 'timestamptz', {
+            codecRef: { codecId: 'pg/timestamptz-temporal@1' },
+          }),
           col('id', 'SERIAL', { notNull: true, codecRef: { codecId: 'pg/int4@1' } }),
           col('sessionId', 'int4', { notNull: true, codecRef: { codecId: 'pg/int4@1' } }),
           col('status', 'text', {
@@ -130,11 +132,14 @@ export default class M extends Migration<never, End> {
         schema: 'public',
         table: 'session',
         columns: [
-          col('endDate', 'date', { codecRef: { codecId: 'pg/date-temporal@1' } }),
+          col('endDate', 'timestamptz', { codecRef: { codecId: 'pg/timestamptz-temporal@1' } }),
           col('id', 'SERIAL', { notNull: true, codecRef: { codecId: 'pg/int4@1' } }),
           col('isActive', 'bool', { notNull: true, codecRef: { codecId: 'pg/bool@1' } }),
           col('sessionId', 'text', { notNull: true, codecRef: { codecId: 'pg/text@1' } }),
-          col('startDate', 'date', { notNull: true, codecRef: { codecId: 'pg/date-temporal@1' } }),
+          col('startDate', 'timestamptz', {
+            notNull: true,
+            codecRef: { codecId: 'pg/timestamptz-temporal@1' },
+          }),
         ],
         constraints: [primaryKey(['id'])],
       }),
@@ -198,10 +203,10 @@ export default class M extends Migration<never, End> {
         schema: 'public',
         table: 'user',
         columns: [
-          col('createdAt', 'date', {
+          col('createdAt', 'timestamptz', {
             notNull: true,
             default: fn('now()'),
-            codecRef: { codecId: 'pg/date-temporal@1' },
+            codecRef: { codecId: 'pg/timestamptz-temporal@1' },
           }),
           col('email', 'text', { notNull: true, codecRef: { codecId: 'pg/text@1' } }),
           col('firstName', 'text', { notNull: true, codecRef: { codecId: 'pg/text@1' } }),
@@ -210,7 +215,9 @@ export default class M extends Migration<never, End> {
           col('lastName', 'text', { notNull: true, codecRef: { codecId: 'pg/text@1' } }),
           col('mustResetPassword', 'bool', { notNull: true, codecRef: { codecId: 'pg/bool@1' } }),
           col('password', 'text', { notNull: true, codecRef: { codecId: 'pg/text@1' } }),
-          col('passwordRestAt', 'date', { codecRef: { codecId: 'pg/date-temporal@1' } }),
+          col('passwordRestAt', 'timestamptz', {
+            codecRef: { codecId: 'pg/timestamptz-temporal@1' },
+          }),
           col('role', 'text', {
             notNull: true,
             default: lit('admin'),
