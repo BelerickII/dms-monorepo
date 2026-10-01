@@ -11,6 +11,7 @@ import csvParser from "csv-parser";
 import * as bcrypt from 'bcrypt';
 import { plainToInstance } from "class-transformer";
 import { validate } from "class-validator";
+import { createStaffDto } from "../dto/staff.dto";
 
 
 @Injectable()
@@ -110,7 +111,7 @@ export class adminRepository {
     //Method to handle the creation of a student
     async createStudent(dto: createStudentDto, role: userRole) {
         //creation of User + Student data on DB must succeed/fail together (Atomicity)
-        await this.prisma.client.transaction(async (tx) => {
+        return await this.prisma.client.transaction(async (tx) => {
             const user = await this.createUser(dto, role, tx);
 
             //Prevent duplicate matric number even tho their constraint for that on the DB already
@@ -134,7 +135,22 @@ export class adminRepository {
         });        
     }
 
+    //Method to handle the creation of a Staff
+    async createStaff(dto: createStaffDto, role: userRole) {
+        return await this.prisma.client.transaction( async (tx) => {
+            const user = await this.createUser(dto, role, tx);
+            
+            const existing = await tx.orm.public.Staff.where({ staffId: dto.staffID }).first();
+            if(existing) { throw new BadRequestException(`Staff with this ID number "${dto.staffID}" already exists`)};
 
+            return await tx.orm.public.Staff.create({
+                staffId: dto.staffID,
+                userId: user.id
+            });
+        });
+    }
+
+    
     //Method to handle the addition of a Department to the DB
     async addDepartment(dto: createDepartmentDto) {
         try {

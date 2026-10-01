@@ -3,6 +3,8 @@ import { userRole } from '../common/enums';
 import { createStudentDto } from './dto/student.dto';
 import { createDepartmentDto } from './dto/department.dto';
 import { adminRepository } from './repositories/admin.repository';
+import { createStaffDto } from './dto/staff.dto';
+import { createUserDto } from './dto/admin.dto';
 
 @Injectable()
 export class UserService {
@@ -27,5 +29,27 @@ export class UserService {
 
     async addDepartment(dto: createDepartmentDto) {
         return this.adminRepo.addDepartment(dto);
-    }    
+    }
+    
+    async createStaff(dto: createStaffDto, role: userRole.STAFF) {
+       try {
+        const staff = await this.adminRepo.createStaff(dto, role);
+
+        return staff;
+        // {message: "Staff added successfully"};
+       } catch (error: any) {
+        throw new BadRequestException(error?.message ?? "failed to add staff")
+       }
+    }
+
+    async createAdmin(dto: createUserDto, role: userRole.ADMIN) {
+        try {
+            const admin = await this.adminRepo.createUser(dto, role);
+
+            return admin;
+            // {message: "Admin added successfully"};
+        } catch (error: any) {
+            throw new BadRequestException(error?.message ?? "failed to add admin")
+        }
+    }
 }

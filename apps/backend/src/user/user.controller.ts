@@ -4,6 +4,8 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { UserService } from './user.service';
 import { createStudentDto } from './dto/student.dto';
 import { createDepartmentDto } from './dto/department.dto';
+import { createStaffDto } from './dto/staff.dto';
+import { createUserDto } from './dto/admin.dto';
 
 @Controller('user')
 export class UserController {
@@ -26,13 +28,25 @@ export class UserController {
 
     @Post('admin/add-student')
     @UsePipes(ValidationPipe)
-    async addOneStudent(@Body() dto: createStudentDto, role: userRole.STUDENT) {
-        return this.userService.createOneStudent(dto, role);
+    async addOneStudent(@Body() dto: createStudentDto) {
+        return this.userService.createOneStudent(dto, userRole.STUDENT);
     }
 
     @Post('admin/department')
     @UsePipes(ValidationPipe)
     async createDepartment(@Body() dto: createDepartmentDto) {
         return this.userService.addDepartment(dto);
+    }
+
+    @Post('admin/add-staff')
+    @UsePipes(ValidationPipe)
+    async addStaff(@Body() dto: createStaffDto) {
+        return this.userService.createStaff(dto, userRole.STAFF);
+    }
+
+    @Post('admin/add-admin')
+    @UsePipes(ValidationPipe)
+    async addAdmin(@Body() dto: createUserDto) {
+        return this.userService.createAdmin(dto, userRole.ADMIN);
     }
 }
