@@ -28,7 +28,14 @@ export class UserService {
     }
 
     async addDepartment(dto: createDepartmentDto) {
-        return this.adminRepo.addDepartment(dto);
+        try {
+            const department = await this.adminRepo.addDepartment(dto);            
+
+            return department; 
+            //{message: 'Department added successfully' };
+        } catch (error: any) {
+            throw new BadRequestException(error?.message ?? 'failed to add department')
+        }
     }
     
     async createStaff(dto: createStaffDto, role: userRole.STAFF) {

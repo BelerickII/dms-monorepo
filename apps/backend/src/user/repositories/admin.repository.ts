@@ -153,19 +153,12 @@ export class adminRepository {
     
     //Method to handle the addition of a Department to the DB
     async addDepartment(dto: createDepartmentDto) {
-        try {
-            const existing = await this.prisma.client.orm.public.Department.where({ department: dto.department }).first();
-            if(existing) { throw new BadRequestException(`${dto.department} already exists`) };
+        const existing = await this.prisma.client.orm.public.Department.where({ department: dto.department }).first();
+        if(existing) { throw new BadRequestException(`${dto.department} already exists`) };
 
-            const department = this.prisma.client.orm.public.Department.create({
-                department: dto.department,
-                max_level: dto.max_level
-            });
-
-            return department; 
-            //{message: 'Department added successfully' };
-        } catch (error: any) {
-            throw new BadRequestException(error?.message ?? 'failed to add department')
-        }
+        return await this.prisma.client.orm.public.Department.create({
+            department: dto.department,
+            max_level: dto.max_level
+        });
     }
 }
