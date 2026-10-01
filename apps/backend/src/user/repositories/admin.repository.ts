@@ -13,7 +13,6 @@ import { plainToInstance } from "class-transformer";
 import { validate } from "class-validator";
 import { createStaffDto } from "../dto/staff.dto";
 
-
 @Injectable()
 export class adminRepository {
     constructor(private readonly prisma: PrismaService) {}
@@ -160,5 +159,42 @@ export class adminRepository {
             department: dto.department,
             max_level: dto.max_level
         });
+    }
+
+
+    //Method to get all users; Pagination and Filtering added
+    async getAllUsers(page: number, limit: number, roleEnum?: userRole) {
+        /* Basically I turned 'isNaN' i.e 'is not a number?' to 'is a number?' with '!isNaN'. So, this line
+        is asking, is 'page' a number? if yes, is it > 0 if true then assign 'parsedPage/..Limit' the number
+        page/limit holds. If false, assign the default i specify after the "?" */
+        const parsedPage = !isNaN(page) && page > 0 ? page: 1;
+        const parsedLimit = !isNaN(limit) && limit > 0 ? limit: 20;
+        const offsetAmount = (parsedPage - 1) * parsedLimit; //specifies the number of rows/records on the db to skip
+
+        //querying the db for the details of users with "role" as the filter constraint
+        let queryBuilder = this.prisma.client.orm.public.User.select(
+            "id",
+            "firstName",
+            "lastName",
+            "email",
+            "isActive",
+            "role",
+            "createdAt"
+        )
+        if(roleEnum) {
+            queryBuilder = queryBuilder.where({role: roleEnum});
+        }
+
+        const user = await queryBuilder.orderBy([(p) => p.createdAt.desc(), (p) => p.id.desc()])
+            .offset(offsetAmount)
+            .limit(parsedLimit)
+            .all();
+        let counter = this.prisma.client.orm.public.User;
+        if(roleEnum) {
+            counter = counter.where({role: roleEnum});
+        }
+        
+        const result = await counter.aggregate((a) => ({total: a.count()}));
+        return {data: user, total: result.total};
     }
 }

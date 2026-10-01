@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Post, UploadedFile, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Post, Query, UploadedFile, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { userRole } from '../common/enums';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UserService } from './user.service';
@@ -48,5 +48,24 @@ export class UserController {
     @UsePipes(ValidationPipe)
     async addAdmin(@Body() dto: createUserDto) {
         return this.userService.createAdmin(dto, userRole.ADMIN);
+    }
+
+    @Get()
+    async getUsers(@Query('page') page: string, @Query('limit') limit: string, @Query('role') rawRole?: string) {
+        /** Did this because my service layer "role" won't accept a string value from the user
+         * the db needs it to be an enum type (that's the constraint). I am casting it to that enum or union
+         * type here to allow it reach the db safely without complaints. I also validated the request to be sure
+         * a user can't do something like this "?role=hacker" and still hit my db (cheers)
+         */
+        const validRoles = ["student", "staff", "admin"];
+        let roleEnum: "student" | "staff" | "admin" | undefined;
+
+        if (rawRole && validRoles.includes(rawRole)) {
+        roleEnum = rawRole as "student" | "staff" | "admin";
+        } else if (rawRole) {
+        throw new BadRequestException("Invalid role provided");
+        }
+        
+        return this.userService.getUsers(+page, +limit, roleEnum);
     }
 }

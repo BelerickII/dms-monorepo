@@ -59,4 +59,8 @@ export class UserService {
             throw new BadRequestException(error?.message ?? "failed to add admin")
         }
     }
+
+    async getUsers(page: number, limit: number, roleEnum: any) {
+        return await this.adminRepo.getAllUsers(page, limit, roleEnum);
+    }
 }
