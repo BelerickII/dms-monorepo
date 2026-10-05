@@ -12,6 +12,7 @@ import * as bcrypt from 'bcrypt';
 import { plainToInstance } from "class-transformer";
 import { validate } from "class-validator";
 import { createStaffDto } from "../dto/staff.dto";
+import { or } from "@prisma/orm-postgres/orm-client";
 
 @Injectable()
 export class adminRepository {
@@ -224,5 +225,48 @@ export class adminRepository {
             ).first({id});
 
         return await user;
+    }
+
+
+    //Method to handle search operations
+    async findUsers(searchTerm: string) {
+        if (!searchTerm) { return [] }
+
+        /*Storing the parameter 'searchTerm' along side a '%' wildcard tell the
+        DB to perform partial matches search of the supplied argument*/
+        const likeSearchTerm = `%${searchTerm}%`;
+
+        return await this.prisma.client.orm.public.User
+        .include("student", 
+            (student) => (student.select(
+                "matric_no",
+                "level",
+                "graduated",
+                "mode_of_entry",
+                "department"
+            ))
+        )
+        .include("staff",
+            (staff) => (staff.select(
+                "staffId"
+            ))
+        )
+        .where(
+            (u) => or(
+                u.firstName.ilike(likeSearchTerm),
+                u.lastName.ilike(likeSearchTerm),
+                u.email.ilike(likeSearchTerm),
+                u.student.some((stu) => stu.matric_no.ilike(likeSearchTerm)),
+                u.staff.some((staff) => staff.staffId.ilike(likeSearchTerm))
+            )
+        ).select(
+            "id",
+            "firstName",
+            "lastName",
+            "email",
+            "isActive",
+            "role",
+            "createdAt"
+        ).all();
     }
 }

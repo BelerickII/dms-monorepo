@@ -67,4 +67,8 @@ export class UserService {
     async getUserById(id: number) {
         return await this.adminRepo.getUserWithDetails(id);
     }
+
+    async searchUsers(searchTerm: string) {
+        return await this.adminRepo.findUsers(searchTerm);
+    }
 }

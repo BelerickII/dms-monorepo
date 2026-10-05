@@ -50,6 +50,11 @@ export class UserController {
         return this.userService.createAdmin(dto, userRole.ADMIN);
     }
 
+    @Get('search')
+    async searchUsers(@Query('query') searchTerm: string) {
+        return this.userService.searchUsers(searchTerm);
+    }
+
     @Get()
     async getUsers(@Query('page') page: string, @Query('limit') limit: string, @Query('role') rawRole?: string) {
         /** Did this because my service layer "role" won't accept a string value from the user
