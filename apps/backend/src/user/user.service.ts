@@ -63,4 +63,8 @@ export class UserService {
     async getUsers(page: number, limit: number, roleEnum: any) {
         return await this.adminRepo.getAllUsers(page, limit, roleEnum);
     }
+
+    async getUserById(id: number) {
+        return await this.adminRepo.getUserWithDetails(id);
+    }
 }

@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, Post, Query, UploadedFile, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Param, Post, Query, UploadedFile, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { userRole } from '../common/enums';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UserService } from './user.service';
@@ -67,5 +67,10 @@ export class UserController {
         }
         
         return this.userService.getUsers(+page, +limit, roleEnum);
+    }
+
+    @Get(':id')
+    async getUserById(@Param('id') id: string) {
+        return this.userService.getUserById(+id);
     }
 }

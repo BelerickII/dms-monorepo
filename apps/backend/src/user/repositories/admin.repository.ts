@@ -197,4 +197,32 @@ export class adminRepository {
         const result = await counter.aggregate((a) => ({total: a.count()}));
         return {data: user, total: result.total};
     }
+
+
+    //Method to full details of a user if they are a student|staff
+    async getUserWithDetails(id: number) {        
+        const user = this.prisma.client.orm.public.User
+            .select(
+                "firstName",
+                "lastName",
+                "email",
+                "isActive",
+                "role",
+                "createdAt"
+            ).include("student",
+                (student) => (student.select(
+                    "matric_no",
+                    "level",
+                    "graduated",
+                    "mode_of_entry",
+                    "department"
+                ))
+            ).include("staff",
+                (staff) => (staff.select(
+                    "staffId"
+                ))
+            ).first({id});
+
+        return await user;
+    }
 }
