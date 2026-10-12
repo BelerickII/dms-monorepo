@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsNumberString, IsString } from "class-validator";
+import { IsEmail, IsNotEmpty, IsNumberString, IsOptional, IsString } from "class-validator";
 import { Trim } from "../../common/trim.decorator";
 
 export class createStaffDto {
@@ -23,7 +23,7 @@ export class createStaffDto {
     lastName: string;
 
     @Trim()
-    @IsNotEmpty()
+    @IsOptional()
     @IsString()
     password: string;  
 }

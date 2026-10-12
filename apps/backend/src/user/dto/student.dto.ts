@@ -1,4 +1,4 @@
-import { IsEmail, IsEnum, IsInt, IsNotEmpty, IsNumber, IsNumberString, IsString } from "class-validator";
+import { IsEmail, IsEnum, IsInt, IsNotEmpty, IsNumber, IsNumberString, IsOptional, IsString } from "class-validator";
 import { Department, ModeOfEntry } from "../../common/enums";
 import { Trim } from "../../common/trim.decorator";
 import { Type } from "class-transformer";
@@ -25,7 +25,7 @@ export class createStudentDto {
     lastName: string;
 
     @Trim()
-    @IsNotEmpty()
+    @IsOptional()
     @IsString()
     password: string;
 

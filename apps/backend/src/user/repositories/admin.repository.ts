@@ -90,15 +90,15 @@ export class adminRepository {
         if(existing) { throw new BadRequestException(`User with email "${lemail}" already exists`)};
 
         //Determine initial password
-        const plainPassword = dto.password;
-        const hashedPassword = await bcrypt.hash(plainPassword, 10);
+        // const plainPassword = dto.password;
+        // const hashedPassword = await bcrypt.hash(plainPassword, 10);
 
         const user = await tx.orm.public.User.create({           
             email: lemail,
             firstName: dto.firstName,
             lastName: dto.lastName,
             role: role,
-            password: hashedPassword,
+            // password: hashedPassword,
             mustResetPassword: true,
             isActive: true            
         });

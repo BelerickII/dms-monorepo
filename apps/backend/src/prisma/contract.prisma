@@ -50,11 +50,11 @@ model User {
   email String  @unique
   firstName String
   lastName  String
-  password  String
+  password  String?
   createdAt DateTime  @default(now())
   isActive  Boolean
   mustResetPassword Boolean
-  passwordRestAt  DateTime?
+  passwordResetAt  DateTime?
   role  userRole  @default(ADMIN)
 
   //Back-relations to child 

@@ -34,7 +34,7 @@ import type {
 } from '@prisma/orm-postgres/contract/types';
 
 export type StorageHash =
-  StorageHashBase<'4a9a1dc260e1975e10bf6467a8ab4d4f3790096446170d136a59f14d4a8a6eb4'>;
+  StorageHashBase<'99e446fa9687d8469eda729e85d80fc2e677d6fea1c9d36e612c37398d60a467'>;
 export type ExecutionHash = ExecutionHashBase<string>;
 export type ProfileHash =
   ProfileHashBase<'3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2'>;
@@ -321,11 +321,11 @@ export type FieldOutputTypes = {
       readonly email: CodecTypes['pg/text@1']['output'];
       readonly firstName: CodecTypes['pg/text@1']['output'];
       readonly lastName: CodecTypes['pg/text@1']['output'];
-      readonly password: CodecTypes['pg/text@1']['output'];
+      readonly password: CodecTypes['pg/text@1']['output'] | null;
       readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
       readonly isActive: CodecTypes['pg/bool@1']['output'];
       readonly mustResetPassword: CodecTypes['pg/bool@1']['output'];
-      readonly passwordRestAt: CodecTypes['pg/timestamptz-temporal@1']['output'] | null;
+      readonly passwordResetAt: CodecTypes['pg/timestamptz-temporal@1']['output'] | null;
       readonly role: 'student' | 'staff' | 'admin';
     };
   };
@@ -412,11 +412,11 @@ export type FieldInputTypes = {
       readonly email: CodecTypes['pg/text@1']['input'];
       readonly firstName: CodecTypes['pg/text@1']['input'];
       readonly lastName: CodecTypes['pg/text@1']['input'];
-      readonly password: CodecTypes['pg/text@1']['input'];
+      readonly password: CodecTypes['pg/text@1']['input'] | null;
       readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
       readonly isActive: CodecTypes['pg/bool@1']['input'];
       readonly mustResetPassword: CodecTypes['pg/bool@1']['input'];
-      readonly passwordRestAt: CodecTypes['pg/timestamptz-temporal@1']['input'] | null;
+      readonly passwordResetAt: CodecTypes['pg/timestamptz-temporal@1']['input'] | null;
       readonly role: 'student' | 'staff' | 'admin';
     };
   };
@@ -506,8 +506,8 @@ export type StorageColumnTypes = {
       readonly isActive: CodecTypes['pg/bool@1']['output'];
       readonly lastName: CodecTypes['pg/text@1']['output'];
       readonly mustResetPassword: CodecTypes['pg/bool@1']['output'];
-      readonly password: CodecTypes['pg/text@1']['output'];
-      readonly passwordRestAt: CodecTypes['pg/timestamptz-temporal@1']['output'] | null;
+      readonly password: CodecTypes['pg/text@1']['output'] | null;
+      readonly passwordResetAt: CodecTypes['pg/timestamptz-temporal@1']['output'] | null;
       readonly role: 'student' | 'staff' | 'admin';
     };
   };
@@ -597,8 +597,8 @@ export type StorageColumnInputTypes = {
       readonly isActive: CodecTypes['pg/bool@1']['input'];
       readonly lastName: CodecTypes['pg/text@1']['input'];
       readonly mustResetPassword: CodecTypes['pg/bool@1']['input'];
-      readonly password: CodecTypes['pg/text@1']['input'];
-      readonly passwordRestAt: CodecTypes['pg/timestamptz-temporal@1']['input'] | null;
+      readonly password: CodecTypes['pg/text@1']['input'] | null;
+      readonly passwordResetAt: CodecTypes['pg/timestamptz-temporal@1']['input'] | null;
       readonly role: 'student' | 'staff' | 'admin';
     };
   };
@@ -610,11 +610,11 @@ export namespace Models {
     email: CodecTypes['pg/text@1']['output'];
     firstName: CodecTypes['pg/text@1']['output'];
     lastName: CodecTypes['pg/text@1']['output'];
-    password: CodecTypes['pg/text@1']['output'];
+    password: CodecTypes['pg/text@1']['output'] | null;
     createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
     isActive: CodecTypes['pg/bool@1']['output'];
     mustResetPassword: CodecTypes['pg/bool@1']['output'];
-    passwordRestAt: CodecTypes['pg/timestamptz-temporal@1']['output'] | null;
+    passwordResetAt: CodecTypes['pg/timestamptz-temporal@1']['output'] | null;
     role: 'student' | 'staff' | 'admin';
     staff: public_Staff | null;
     student: public_Student | null;
@@ -1393,7 +1393,7 @@ type ContractBase = Omit<
                 readonly password: {
                   readonly nativeType: 'text';
                   readonly codecId: 'pg/text@1';
-                  readonly nullable: false;
+                  readonly nullable: true;
                 };
                 readonly createdAt: {
                   readonly nativeType: 'timestamptz';
@@ -1411,7 +1411,7 @@ type ContractBase = Omit<
                   readonly codecId: 'pg/bool@1';
                   readonly nullable: false;
                 };
-                readonly passwordRestAt: {
+                readonly passwordResetAt: {
                   readonly nativeType: 'timestamptz';
                   readonly codecId: 'pg/timestamptz-temporal@1';
                   readonly nullable: true;
@@ -2194,7 +2194,7 @@ type ContractBase = Omit<
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
               readonly password: {
-                readonly nullable: false;
+                readonly nullable: true;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
               readonly createdAt: {
@@ -2212,7 +2212,7 @@ type ContractBase = Omit<
                 readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/bool@1' };
               };
-              readonly passwordRestAt: {
+              readonly passwordResetAt: {
                 readonly nullable: true;
                 readonly type: {
                   readonly kind: 'scalar';
@@ -2262,7 +2262,7 @@ type ContractBase = Omit<
                 readonly createdAt: { readonly column: 'createdAt' };
                 readonly isActive: { readonly column: 'isActive' };
                 readonly mustResetPassword: { readonly column: 'mustResetPassword' };
-                readonly passwordRestAt: { readonly column: 'passwordRestAt' };
+                readonly passwordResetAt: { readonly column: 'passwordResetAt' };
                 readonly role: { readonly column: 'role' };
               };
             };
