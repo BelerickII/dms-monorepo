@@ -44,6 +44,22 @@ enum stuCategory {
   FINALIST = "finalist"
 }
 
+enum cronStatus {
+  @@type("pg/text@1")
+  PENDING = "pending"
+  SENDING = "sending"
+  SENT = "sent"
+  CANCELLED = "cancelled"
+  FAILED = "failed"
+}
+
+enum mailType {
+  @@type("pg/text@1")
+  ACCOUNT_INVITATION = "account invitation"
+  DOCUMENT_REJECTION = "document rejection"
+  PASSWORD_RESET = "password reset"
+}
+
 
 model User {
   id  Int @id @default(autoincrement())
@@ -60,6 +76,7 @@ model User {
   //Back-relations to child 
   student Student?
   staff   Staff?
+  mailOutbox emailOutbox[]
 }
 
 
@@ -193,4 +210,23 @@ model Notification {
   //relations
   student Student @relation(fields: [studentId], references: [id])
   staff Staff @relation(fields: [staffId], references: [id])
+}
+
+
+model emailOutbox {
+  id          Int @id @default(autoincrement())
+  kind        mailType
+  payload     String?  //JSON snapshot for DOCUMENT_REJECTION (do not log)
+  status      cronStatus  @default(PENDING)
+  attempts    Int @default(0)
+  maxAttempts Int @default(5)
+  nextAttemptAt DateTime  @default(now())
+  createdAt   DateTime  @default(now())
+  lockedAt    DateTime?
+  sentAt      DateTime?
+  lastError   String?
+  userId      Int
+
+  //relation
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

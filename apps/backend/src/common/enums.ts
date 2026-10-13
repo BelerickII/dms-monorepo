@@ -16,3 +16,17 @@ export enum userRole {
     STAFF = 'staff',
     ADMIN = 'admin',
 }
+
+export enum mailType {
+  ACCOUNT_INVITATION = "account invitation",
+  DOCUMENT_REJECTION = "document rejection",
+  PASSWORD_RESET = "password reset"
+}
+
+export enum mailStatus {
+  PENDING = "pending",
+  SENDING = "sending",
+  SENT = "sent",
+  CANCELLED = "cancelled",
+  FAILED = "failed"
+}
