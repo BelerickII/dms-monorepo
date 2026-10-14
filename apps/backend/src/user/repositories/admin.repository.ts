@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 
-import { userRole } from "../../common/enums";
+import { mailStatus, mailType, userRole } from "../../common/enums";
 import { createUserDto } from "../dto/admin.dto";
 import { createStudentDto } from "../dto/student.dto";
 import { PrismaService } from "../../prisma/prisma.service";
@@ -103,6 +103,13 @@ export class adminRepository {
             isActive: true            
         });
 
+        if(user.role === userRole.ADMIN) {
+           await tx.orm.public.emailOutbox.create({
+                userId: user.id,
+                kind: mailType.ACCOUNT_INVITATION,
+                status: mailStatus.PENDING,
+            }); 
+        }
         return user;
         
     }
@@ -123,7 +130,7 @@ export class adminRepository {
             const dept = await tx.orm.public.Department.where({ department: dto.department }).first();
             if(!dept) { throw new NotFoundException('Department not found')};
 
-            return await tx.orm.public.Student.create({
+            const student = await tx.orm.public.Student.create({
                 matric_no: dto.matric_no,
                 department: dto.department,
                 mode_of_entry: dto.mode_of_entry,
@@ -132,6 +139,12 @@ export class adminRepository {
                 userId: user.id,
                 departmentId: dept.id
             });
+            await tx.orm.public.emailOutbox.create({
+                userId: user.id,
+                kind: mailType.ACCOUNT_INVITATION,
+                status: mailStatus.PENDING,
+            });
+            return student;
         });        
     }
 
@@ -143,10 +156,16 @@ export class adminRepository {
             const existing = await tx.orm.public.Staff.where({ staffId: dto.staffID }).first();
             if(existing) { throw new BadRequestException(`Staff with this ID number "${dto.staffID}" already exists`)};
 
-            return await tx.orm.public.Staff.create({
+            const staff = await tx.orm.public.Staff.create({
                 staffId: dto.staffID,
                 userId: user.id
             });
+            await tx.orm.public.emailOutbox.create({
+                userId: user.id,
+                kind: mailType.ACCOUNT_INVITATION,
+                status: mailStatus.PENDING,
+            });
+            return staff;
         });
     }
 
