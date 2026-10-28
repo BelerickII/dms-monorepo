@@ -1,13 +1,12 @@
 import { Module } from "@nestjs/common";
 import { ScheduleModule } from "@nestjs/schedule";
-import { ProviderModule } from "./provider.module";
 import { emailWorkerService } from "./mail/email.worker.service";
+import { emailService } from "./mail/email.service";
 
 @Module({
     imports: [
-        ProviderModule,
         ScheduleModule.forRoot()
     ],
-    providers: [ emailWorkerService ]
+    providers: [ emailWorkerService, emailService ]
 })
 export class WorkerModule {}

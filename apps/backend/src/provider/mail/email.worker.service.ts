@@ -74,7 +74,7 @@ export class emailWorkerService implements OnModuleInit, OnModuleDestroy {
 
                     const secret = process.env.JWT_SECRET;
                     const frontend = process.env.FRONTEND_URL;
-                    if (!secret) throw new Error('Missing JWT_SECRET OR FRONTEND_URL');
+                    if (!secret || !frontend) throw new Error('Missing JWT_SECRET OR FRONTEND_URL');
                     const token = sign({ sub: Number(user.id), type: 'activation', credentialAt: null}, secret, {
                         issuer: 'dms-api',
                         audience: 'dms-activation',

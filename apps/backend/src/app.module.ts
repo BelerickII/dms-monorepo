@@ -5,6 +5,7 @@ import { UserModule } from './user/user.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
 import { WorkerModule } from './provider/worker.module';
+import { ProviderModule } from './provider/provider.module';
 
 
 @Module({
@@ -12,7 +13,8 @@ import { WorkerModule } from './provider/worker.module';
     UserModule,
     PrismaModule, 
     AuthModule,
-    WorkerModule
+    WorkerModule,
+    ProviderModule
   ],
   controllers: [AppController],
   providers: [AppService],
